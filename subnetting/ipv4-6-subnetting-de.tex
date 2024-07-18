@@ -1,0 +1,155 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\title{IPv4/IPv6 Adress- und Subnetzberechnung}
+\author{Nikola Mihaylov}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{IPv4}
+
+\subsection*{Quellinformationen}
+
+Hier sind die Quellinformationen, die für den folgenden Subnetzprozess verwendet werden:
+
+\begin{itemize}
+    \item IP-Adresse: \texttt{120.48.7.105} | \texttt{01111000.00110000.00000111.01101001}
+    \item Subnetzmaske: \texttt{255.255.255.248} | \texttt{11111111.11111111.11111111.11111000}
+\end{itemize}
+
+\subsection*{Berechnung der Netzwerkadresse}
+Die Berechnung der Netzwerkadresse erfolgt durch eine UND-Operation mit der IP-Adresse und der Subnetzmaske in Binärform:
+
+\[
+\begin{array}{c}
+\texttt{01111000.00110000.00000111.01101001} \\
+\text{UND} \\
+\texttt{11111111.11111111.11111111.11111000} \\
+\hline
+\texttt{01111000.00110000.00000111.01101000} \\
+\end{array}
+\]
+
+Die resultierende Netzwerkadresse in Dezimalform ist:
+
+\texttt{120.48.7.104}
+
+\subsection*{Berechnung der Broadcast-Adresse}
+Die Berechnung der Broadcast-Adresse erfolgt durch Invertieren der Subnetzmaske und eine ODER-Operation mit der Netzwerkadresse.
+
+Invertierte Subnetzmaske:
+
+\[
+\begin{array}{c}
+\texttt{11111111.11111111.11111111.11111000} \\
+\hline
+\texttt{00000000.00000000.00000000.00000111} \\
+\end{array}
+\]
+
+Durchführen der ODER-Operation mit der Netzwerkadresse und der invertierten Subnetzmaske:
+
+\[
+\begin{array}{c}
+\texttt{01111000.00110000.00000111.01101000} \\
+\text{ODER} \\
+\texttt{00000000.00000000.00000000.00000111} \\
+\hline
+\texttt{01111000.00110000.00000111.01101111} \\
+\end{array}
+\]
+
+Das Ergebnis, konvertiert von Binär- in Dezimalform, ist:
+
+\texttt{120.48.7.111}
+
+\subsection*{Erste und letzte nutzbare IP-Adressen}
+
+Die erste nutzbare IP-Adresse ist die Netzwerkadresse plus eins:
+
+\[
+\texttt{120.48.7.104} + 1 = \texttt{120.48.7.105}
+\]
+
+Die letzte nutzbare IP-Adresse ist die Broadcast-Adresse minus eins:
+
+\[
+\texttt{120.48.7.111} - 1 = \texttt{120.48.7.110}
+\]
+
+\newpage
+
+\section*{IPv6}
+
+\subsection*{Quellinformationen}
+
+Hier sind die Quellinformationen, die für den folgenden Subnetzprozess verwendet werden:
+
+\begin{itemize}
+    \item IP-Adresse: \texttt{2001:0db8:85a3:0000:0000:8a2e:0370:7334}
+    \item Präfixlänge: \texttt{/64}
+\end{itemize}
+
+\subsection*{Berechnung der Netzwerkadresse}
+Die Berechnung der Netzwerkadresse erfolgt, indem die Bits bis zur Präfixlänge beibehalten und die verbleibenden Bits auf null gesetzt werden:
+
+\[
+\begin{array}{c}
+\texttt{2001:0db8:85a3:0000:0000:8a2e:0370:7334} \\
+\text{UND} \\
+\texttt{ffff:ffff:ffff:ffff:0000:0000:0000:0000} \\
+\hline
+\texttt{2001:0db8:85a3:0000:0000:0000:0000:0000} \\
+\end{array}
+\]
+
+Die resultierende Netzwerkadresse ist:
+
+\texttt{2001:db8:85a3::/64}
+
+\subsection*{Erste und letzte nutzbare IP-Adressen}
+
+Die erste nutzbare IP-Adresse ist die Netzwerkadresse plus eins. Da IPv6-Adressen hexadezimal sind, ist dieser Vorgang dem Addieren von eins in Binärform ähnlich:
+
+\[
+\texttt{2001:db8:85a3::1}
+\]
+
+Die letzte nutzbare IP-Adresse ist die Adresse vor der nächsten Netzwerkadresse, berechnet durch Setzen aller Bits nach dem Präfix auf eins und Abzug von eins:
+
+\[
+\begin{array}{c}
+\texttt{2001:0db8:85a3:0000:0000:0000:0000:0000} \\
+\text{OR} \\
+\texttt{0000:0000:0000:ffff:ffff:ffff:ffff:ffff} \\
+\hline
+\texttt{2001:0db8:85a3:ffff:ffff:ffff:ffff:ffff} \\
+\end{array}
+\]
+
+Durch Abziehen von eins erhalten wir:
+
+\texttt{2001:db8:85a3:ffff:ffff:ffff:ffff:fffe}
+
+\subsection*{Beispiel Subnetzberechnung}
+Angenommen, wir müssen vier Subnetze innerhalb des \texttt{2001:db8:85a3::/64}-Netzwerks erstellen. Dies erfordert das Ausleihen von zwei Bits aus dem Hostteil:
+
+\begin{itemize}
+    \item Neue Präfixlänge: \texttt{/66}
+\end{itemize}
+
+Die Subnetzadressen sind dann:
+
+\begin{itemize}
+    \item \texttt{2001:db8:85a3:0::/66}
+    \item \texttt{2001:db8:85a3:0:0:0:0:4000::/66}
+    \item \texttt{2001:db8:85a3:0:0:0:0:8000::/66}
+    \item \texttt{2001:db8:85a3:0:0:0:0:c000::/66}
+\end{itemize}
+
+\end{document}

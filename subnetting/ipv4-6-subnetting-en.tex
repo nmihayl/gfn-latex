@@ -1,0 +1,155 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\title{IPv4/IPv6 Address and Subnet Calculation}
+\author{Nikola Mihaylov}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{IPv4}
+
+\subsection*{Source Information}
+
+Here is the source information to be used for the following subnetting process:
+
+\begin{itemize}
+    \item IP Address: \texttt{120.48.7.105} | \texttt{01111000.00110000.00000111.01101001}
+    \item Subnet Mask: \texttt{255.255.255.248} | \texttt{11111111.11111111.11111111.11111000}
+\end{itemize}
+
+\subsection*{Network Address Calculation}
+Calculating the network address involves performing an AND operation with the IP address and the subnet mask in binary:
+
+\[
+\begin{array}{c}
+\texttt{01111000.00110000.00000111.01101001} \\
+\text{AND} \\
+\texttt{11111111.11111111.11111111.11111000} \\
+\hline
+\texttt{01111000.00110000.00000111.01101000} \\
+\end{array}
+\]
+
+The resulting network address in decimal is:
+
+\texttt{120.48.7.104}
+
+\subsection*{Broadcast Address Calculation}
+Calculating the broadcast address involves inverting the subnet mask and performing an OR operation with the network address.
+
+Inverted subnet mask:
+
+\[
+\begin{array}{c}
+\texttt{11111111.11111111.11111111.11111000} \\
+\hline
+\texttt{00000000.00000000.00000000.00000111} \\
+\end{array}
+\]
+
+Performing the OR operation with the network address and the inverted subnet mask:
+
+\[
+\begin{array}{c}
+\texttt{01111000.00110000.00000111.01101000} \\
+\text{OR} \\
+\texttt{00000000.00000000.00000000.00000111} \\
+\hline
+\texttt{01111000.00110000.00000111.01101111} \\
+\end{array}
+\]
+
+The result converted from binary to decimal is:
+
+\texttt{120.48.7.111}
+
+\subsection*{First and Last Usable IP Addresses}
+
+The first usable IP address is the network address plus one:
+
+\[
+\texttt{120.48.7.104} + 1 = \texttt{120.48.7.105}
+\]
+
+The last usable IP address is the broadcast address minus one:
+
+\[
+\texttt{120.48.7.111} - 1 = \texttt{120.48.7.110}
+\]
+
+\newpage
+
+\section*{IPv6}
+
+\subsection*{Source Information}
+
+Here is the source information to be used for the following subnetting process:
+
+\begin{itemize}
+    \item IP Address: \texttt{2001:0db8:85a3:0000:0000:8a2e:0370:7334}
+    \item Prefix Length: \texttt{/64}
+\end{itemize}
+
+\subsection*{Network Address Calculation}
+Calculating the network address involves keeping the bits up to the prefix length and setting the remaining bits to zero:
+
+\[
+\begin{array}{c}
+\texttt{2001:0db8:85a3:0000:0000:8a2e:0370:7334} \\
+\text{AND} \\
+\texttt{ffff:ffff:ffff:ffff:0000:0000:0000:0000} \\
+\hline
+\texttt{2001:0db8:85a3:0000:0000:0000:0000:0000} \\
+\end{array}
+\]
+
+The resulting network address is:
+
+\texttt{2001:db8:85a3::/64}
+
+\subsection*{First and Last Usable IP Addresses}
+
+The first usable IP address is the network address plus one. Since IPv6 addresses are hexadecimal, this operation is similar to adding one in binary:
+
+\[
+\texttt{2001:db8:85a3::1}
+\]
+
+The last usable IP address is the address before the next network address, calculated by setting all bits after the prefix to one and subtracting one:
+
+\[
+\begin{array}{c}
+\texttt{2001:0db8:85a3:0000:0000:0000:0000:0000} \\
+\text{OR} \\
+\texttt{0000:0000:0000:ffff:ffff:ffff:ffff:ffff} \\
+\hline
+\texttt{2001:0db8:85a3:ffff:ffff:ffff:ffff:ffff} \\
+\end{array}
+\]
+
+Subtracting one gives us:
+
+\texttt{2001:db8:85a3:ffff:ffff:ffff:ffff:fffe}
+
+\subsection*{Example Subnet Calculation}
+Suppose we need to create four subnets within the \texttt{2001:db8:85a3::/64} network. This requires borrowing two bits from the host portion:
+
+\begin{itemize}
+    \item New Prefix Length: \texttt{/66}
+\end{itemize}
+
+The subnet addresses are then:
+
+\begin{itemize}
+    \item \texttt{2001:db8:85a3:0::/66}
+    \item \texttt{2001:db8:85a3:0:0:0:0:4000::/66}
+    \item \texttt{2001:db8:85a3:0:0:0:0:8000::/66}
+    \item \texttt{2001:db8:85a3:0:0:0:0:c000::/66}
+\end{itemize}
+
+\end{document}
