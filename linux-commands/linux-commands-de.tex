@@ -1,0 +1,173 @@
+\documentclass{article}
+\newcommand{\doublebreak}{\break\break}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{ragged2e}
+
+%opening
+\title{Linux-Befehle}
+\author{Nikola Mihaylov}
+
+\begin{document}
+	\RaggedRight
+	
+	\maketitle
+	
+	\newpage
+	
+	\tableofcontents
+	
+	\newpage
+	
+	\section{\texttt{clear}}
+	Löscht den Inhalt der aktuellen Terminalbildschirm. Kann auch mit der Tastenkombination Strg+L ausgeführt werden.
+	\doublebreak
+	\texttt{clear}
+	
+	\section{\texttt{pwd}}
+	Gibt den absoluten Pfad zum aktuellen Arbeitsverzeichnis aus.
+	\doublebreak
+	\texttt{pwd}
+	
+    \section{\texttt{--help}}
+	Allgemeines Flag, das an das Ende von Befehlen angehängt werden kann, um eine kurze Hilfeseite mit Optionen und der richtigen Syntax eines Befehls anzuzeigen.
+	\doublebreak
+	\texttt{nano --help}
+	
+	\section{\texttt{man}}
+	Handbuchseite für einen Befehl. Entspricht --help, ist aber viel detaillierter und scrollbar.
+	\doublebreak
+	\texttt{man nano}
+	
+	\section{\texttt{cd}}
+	Wechselt das Verzeichnis, akzeptiert entweder einen relativen oder absoluten Pfad.
+	\doublebreak
+	\texttt{cd ..} | navigiert zum "oberen" Verzeichnis im Verhältnis zum aktuellen
+	\doublebreak
+	\texttt{cd /etc/ssh} | navigiert zum absoluten Verzeichnis (beachten Sie den /, der das Stammverzeichnis als Startpunkt angibt)
+	\doublebreak
+	\texttt{cd Downloads} | navigiert zum relativen Verzeichnis, dieses Beispiel geht davon aus, dass das aktuelle Arbeitsverzeichnis home/\textasciitilde{} ist).
+
+    \newpage
+	
+	\section{\texttt{ls}}
+	Listet Dateien und Verzeichnisse im aktuellen Arbeitsverzeichnis alphabetisch auf. Standardmäßig werden versteckte Dateien und Verzeichnisse nicht angezeigt.
+	\doublebreak
+	\texttt{ls}
+	\doublebreak
+	\texttt{ls -a} | listet alle normalen Dateien und Verzeichnisse sowie alle versteckten Dateien und Verzeichnisse auf, die durch einen Punkt (.) am Anfang ihres Namens gekennzeichnet sind.
+	
+	\section{\texttt{mkdir}}
+	Erstellt ein Unterverzeichnis relativ zum aktuellen Arbeitsverzeichnis, sofern kein absoluter Pfad angegeben ist.
+	\doublebreak
+	\texttt{mkdir test} | erstellt relativ zum aktuellen Arbeitsverzeichnis ein Unterverzeichnis "test".
+	\doublebreak
+	\texttt{mkdir /home/padawan/test} | Erstellt dasselbe "test"-Verzeichnis, jedoch mit dem absoluten Pfad, um den spezifischen Speicherort des Verzeichnisses anzugeben.
+	
+	\section{\texttt{touch}}
+	Erstellt eine leere Datei an einem absoluten oder relativen Speicherort.
+	\doublebreak
+	\texttt{touch config.txt} | erstellt eine Datei namens \texttt{config.txt} relativ zum aktuellen Arbeitsverzeichnis. Ein absoluter Speicherort kann ebenfalls angegeben werden, ähnlich der \texttt{mkdir}-Syntax von vorhin.
+	
+	\section{\texttt{mv}}
+	Verschiebt Dateien und Verzeichnisse oder benennt sie um.
+	\doublebreak
+	\texttt{mv ~/Downloads/docker-compose.yml /var/docker/Container/docker-compose.yml} | verschiebt eine Quelldatei links zu einem Ziel rechts. Dies kann auch mit Verzeichnissen anstelle von Dateien erfolgen.
+	\doublebreak
+	\texttt{mv ~/Downloads/docker-compose.yml ~/Downloads/test-docker-compose.yml} | Wenn sich die Datei am selben Speicherort befindet, aber einen anderen Namen hat, wird sie stattdessen umbenannt.
+	
+	\section{\texttt{su -}}
+	Ermöglicht das Wechseln zwischen Benutzern in der aktuellen Terminal-Sitzung. Durch Angabe eines Bindestrichs wechselt su zum Root-Benutzerkonto.
+	\doublebreak
+	\texttt{su -}
+	
+	\newpage
+	
+	\section{\texttt{whoami}}
+	Gibt den Benutzernamen der aktuellen Terminal-Sitzung aus.
+	\doublebreak
+	\texttt{whoami}
+	
+	\section{\texttt{history}}
+	Gibt eine chronologisch nummerierte Liste der im Shell ausgeführten Befehle aus. Die Abkürzung ist Strg+r, was eine neue Suchaufforderung für die Verlaufdatei öffnet.
+	\doublebreak
+	\texttt{history}
+	
+	\section{\texttt{!n}}
+	Kann mit \texttt{history} kombiniert werden, um einen Befehl basierend auf seiner chronologischen Nummer in der History-Ausgabe zu wiederholen.
+	\doublebreak
+	\texttt{!20} | dieser entnimmt der Ausgabe von \texttt{history} den mit der Nummer 20 bezeichneten Eintrag und führt den gleichen Befehl aus.
+	
+	\section{\texttt{reboot}}
+	Plant einen Systemneustart. Erfordert Superuser-Berechtigungen.
+	\doublebreak
+	\texttt{reboot}
+	
+	\section{\texttt{shutdown}}
+	Plant ein Herunterfahren des Systems. Erfordert Superuser-Berechtigungen.
+	\doublebreak
+	\texttt{shutdown} | Das Ausführen des Befehls ohne Optionen führt zu einer Verzögerung des Herunterfahrens von etwa einer Minute.
+	\doublebreak
+	\texttt{shutdown now} | Dieser Befehl versucht, das System sofort und mit minimaler Verzögerung herunterzufahren.
+	\doublebreak
+	\texttt{shutdown -h 13:45} | ein 24-Stunden-Format als Herunterfahranweisung akzeptiert, wird das System ausgeschaltet, wenn die Uhr die angegebene Zeit anzeigt.
+	
+	\newpage
+	
+	\section{\texttt{sudo}}
+	Gewährt dem Benutzer vorübergehende Administratorrechte (Superuser) für die Ausführung eines Befehls, der solche Rechte nutzt. Dieser Befehl muss explizit unter Debian installiert werden und erfordert, dass der Root-/Administratorbenutzer einen normalen Benutzer zur Gruppe "sudo" hinzufügt, damit er funktioniert.
+	\doublebreak
+	\texttt{sudo nano /etc/ssh/sshd\_config} | führt \texttt{nano} mit Superuser-Befugnissen aus, während eine geschützte Datei im Verzeichnis \texttt{{/etc/}} geöffnet wird, da andernfalls keine Änderungen gespeichert werden können.
+	
+	\section{\texttt{apt}}
+	Paketverwaltungsprogramm für Debian-basierte Distributionen. Funktioniert als Abstraktion für \texttt{dpkg} und kann durch \texttt{apt-get} ersetzt werden. Erfordert Superuser-Berechtigungen.
+	\doublebreak
+	\texttt{apt update} | aktualisiert die Metadaten aller verfügbaren Pakete aus dem Repository. Empfohlen vor dem Starten anderer \texttt{apt}-Befehle
+	\doublebreak
+	\texttt{apt search vim} | durchsucht die Repository-Metadaten nach einem Paket, das als Argument für den Befehl angegeben wird (in diesem Beispiel wird das Paket \texttt{vim} verwendet)
+	\doublebreak
+	\texttt{apt upgrade} | aktualisiert alle installierten Pakete auf die aktuellsten Versionen in Übereinstimmung mit den Metadaten, die mit \texttt{update} bezogen wurden
+	
+	\section{\texttt{ssh}}
+	Verwendet OpenSSH für die Remote-Verbindung zu einem anderen Computer, auf dem der OpenSSH-Server läuft. Die Open-SSH-Client- und Server-Pakete müssen explizit unter Debian installiert werden und verfügen über zusätzliche Dienstprogramme wie \texttt{ssh-keygen}, \texttt{ssh-copy-id}, \texttt{scp} usw.
+	\doublebreak
+	\texttt{ssh padawan@10.100.26.158} | versucht eine SSH-Verbindung als Benutzer \texttt{padawan} unter (@) der IPv4-Adresse \texttt{10.100.26.158} herzustellen. Wenn eine Namensauflösung möglich ist, ist auch eine Verbindung unter Verwendung des Hostnamens des Servers statt seiner IPv4 möglich (\texttt{ssh padawan@debian-test1}).
+	\doublebreak
+	\texttt{ssh-keygen -t rsa} | generiert SSH-Schlüssel für die Authentifizierung und den passwortlosen Login. Mit \texttt{-t} kann eine Verschlüsselungsart definiert werden, in diesem Fall RSA-Verschlüsselung. Standardmäßig werden die Schlüssel im Home-Verzeichnis des Benutzers gespeichert (zum Beispiel \texttt{\textasciitilde{}/.ssh/}).
+	\doublebreak
+	\texttt{ssh-copy-id -i ~/.ssh/id\_rsa.pub padawan@10.100.26.158} | kopiert eine angegebene ID-Datei (in diesem Fall die öffentliche Schlüsseldatei, die mit \texttt{ssh-keygen} generiert wurde) auf einen Remote-Host, auf dem der OpenSSH-Server läuft. Dies ermöglicht passwortlose Anmeldungen und dient als sicherere Form der Authentifizierung.
+	
+	\newpage
+	
+	\section{\texttt{systemctl}}
+	Wird zum Verwalten von Hintergrunddiensten verwendet. Erfordert Superuser-Berechtigungen.
+	\doublebreak
+	\texttt{systemctl status sshd} | zeigt den aktuellen Status eines angegebenen Dienstes an (in diesem Fall des OpenSSH-Servers \texttt{sshd}). Kann verwendet werden, um zu prüfen, ob ein Dienst ausgeführt wird oder ausgefallen ist und was die Fehlermeldung des ausgefallenen Dienstes ist.
+	\doublebreak
+	\texttt{systemctl start sshd} | startet einen Dienst, der am Ende des Befehls bereitgestellt wird (in diesem Fall des OpenSSH-Servers \texttt{sshd}). Im Fehlerfall wird der Benutzer benachrichtigt und aufgefordert, diesen mit \texttt{systemctl status} zu überprüfen. Dabei ist zu beachten, dass ein Dienst, der nicht mit \texttt{systemctl enable} aktiviert wird, nur für die aktuelle Sitzung aktiviert wird.
+	\doublebreak
+	\texttt{systemctl stop sshd} | stoppt einen laufenden Dienst. Wird ein Dienst mit \texttt{systemctl enable} aktiviert, dann wird der Dienst nur für die aktuelle Sitzung gestoppt und beim nächsten Systemstart ohne Benutzereingriff gestartet.
+	\doublebreak
+	\texttt{systemctl enable sshd} | ermöglicht den automatischen Start eines Dienstes beim Hochfahren des Systems.
+	\doublebreak
+	\texttt{systemctl disable sshd} | fungiert als Gegenteil von \texttt{enable}, indem es den Dienst als deaktiviert kennzeichnet, um zu verhindern, dass er automatisch mit dem System gestartet wird.
+	\doublebreak
+	\texttt{systemctl enable --now sshd} | eine Verknüpfung, die \texttt{systemctl start} und \texttt{systemctl enable} zu einem einzigen Befehl kombiniert.
+	
+	\section{\texttt{nano}}
+	Ein terminalbasierter Texteditor. Das Paket muss explizit unter Debian installiert werden. Es verfügt über eine eigene Benutzeroberfläche und Tastenkombinationen.
+	\doublebreak
+	\texttt{nano /etc/network/interfaces} | öffnet eine angegebene Datei mit \texttt{nano}.
+	
+	\section{\texttt{ip}}
+	Zeigt und manipuliert Routing- und Netzwerkgeräte.
+	\doublebreak
+	\texttt{ip address} | funktioniert wie \texttt{ipconfig /all} unter Windows. Listet alle an den Computer angeschlossenen Netzwerkgeräte sowie diverse Eigenschaften wie MAC-Adresse, IPv4- und IPv6-Adressen und mehr auf. Kann auch mit \texttt{ip addr} und \texttt{ip a} abgekürzt werden.
+	
+	\newpage
+	
+	\section{\texttt{docker}}
+	Befehl zum Verwalten der Docker Engine. Sie muss auf dem System installiert sein, bevor die Befehle verwendet werden können.
+	\doublebreak
+	\texttt{docker compose up -d} | erstellt und startet einen Container basierend auf der Datei \texttt{docker-compose.yml} im aktuellen Arbeitsverzeichnis. \texttt{-d} startet den Container im Hintergrund. 
+	
+\end{document}

@@ -1,0 +1,51 @@
+\documentclass[]{article}
+
+%opening
+\title{Linux Commands}
+\author{}
+
+\begin{document}
+
+\maketitle
+
+\section{clear}
+
+Clears the current terminal screen.
+
+\section{pwd}
+
+Prints the absolute path to the current working directory.
+
+\section{--help}
+
+Common flag that can be passed to the end of commands to display a short help page including options and the proper syntax of a command.
+
+\section{man}
+
+Manual page for a command. Equivalent of --help but much more detailed and scrollable.
+
+\section{cd}
+
+Change directory, accepts either a relative or absolute path.
+
+\section{ls}
+
+Alphabetically ists files and directories in the current working directory. By default it does not show hidden files and directories.
+
+\section{su -}
+
+Allows switching between users in current terminal session. Providing a hyphen to su switches to the root user account.
+
+\section{whoami}
+
+Prints the username of the current terminal session.
+
+\section{history}
+
+Prints a chronologically numbered list of the executed commands in the shell. Shortcut is Ctrl+r which opens a new search prompt for the hist file.
+
+\section{!n}
+
+Can be combined with history to repeat a command based on its chronological number in the history output.
+
+\end{document}
